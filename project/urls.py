@@ -7,5 +7,7 @@ urlpatterns = [
     #1
     path("django/jsonresponsenomodel/", views.no_rest_no_model),
     #2
-    path("django/jsonresponsefrommodel/", views.no_rest_from_model)
+    path("django/jsonresponsefrommodel/", views.no_rest_from_model),
+    #3.1
+    path("rest/fbvlist/", views.fbv_list)
 ]
