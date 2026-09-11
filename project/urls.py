@@ -35,4 +35,6 @@ urlpatterns = [
     path("rest/viewset/", include(router.urls)),
     #8 Find Movie
     path("fbv/findmovie/", views.find_movie),
+    #9 New Reservation
+    path("fbv/newreservation/", views.new_reservation),
 ]
