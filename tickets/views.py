@@ -4,7 +4,7 @@ from rest_framework import status, filters
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework import generics, mixins
+from rest_framework import generics, mixins, viewsets
 
 from .models import Movie, Guest, Reservation
 from .serializers import  GuestSerializer, MovieSerializer, ReservationSerializer
@@ -152,5 +152,11 @@ class Generics_list(generics.ListCreateAPIView):
 
 #6.2 GET PUT DELETE
 class Generics_pk(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Guest.objects.all()
+    serializer_class = GuestSerializer
+
+
+#7 Viewsets
+class Viewset_guest(viewsets.ModelViewSet):
     queryset = Guest.objects.all()
     serializer_class = GuestSerializer

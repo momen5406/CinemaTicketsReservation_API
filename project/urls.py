@@ -1,6 +1,11 @@
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+
 from tickets import views
+
+router = DefaultRouter()
+router.register('guests', views.Viewset_guest)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -22,6 +27,8 @@ urlpatterns = [
     path("rest/mixins/<int:pk>", views.Mixins_pk.as_view()),
     #6.1 GET POST (GENERICS)
     path("rest/generics/", views.Generics_list.as_view()),
-    #5.2 GET PUT DELETE (GENERICS)
-    path("rest/generics/<int:pk>", views.Generics_pk.as_view())
+    #6.2 GET PUT DELETE (GENERICS)
+    path("rest/generics/<int:pk>", views.Generics_pk.as_view()),
+    #7 Viewsets
+    path("rest/viewset/", include(router.urls))
 ]
