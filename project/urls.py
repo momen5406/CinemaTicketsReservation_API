@@ -32,5 +32,7 @@ urlpatterns = [
     #6.2 GET PUT DELETE (GENERICS)
     path("rest/generics/<int:pk>", views.Generics_pk.as_view()),
     #7 Viewsets
-    path("rest/viewset/", include(router.urls))
+    path("rest/viewset/", include(router.urls)),
+    #8 Find Movie
+    path("fbv/findmovie/", views.find_movie),
 ]
