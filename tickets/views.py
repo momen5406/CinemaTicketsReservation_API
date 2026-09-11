@@ -1,10 +1,10 @@
-from django.db.migrations import serializer
 from django.http import Http404
 from django.http.response import JsonResponse
 from rest_framework import status, filters
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework import generics, mixins
 
 from .models import Movie, Guest, Reservation
 from .serializers import  GuestSerializer, MovieSerializer, ReservationSerializer
@@ -118,3 +118,27 @@ class CBV_pk(APIView):
         guest = self.get_object(pk)
         guest.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+#5 Mixins
+#5.1 Mixins List
+class Mixins_list(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
+    queryset = Guest.objects.all()
+    serializer_class = GuestSerializer
+
+    def get(self, request):
+        return self.list(request)
+    def post(self, request):
+        return self.create(request)
+
+#5.2 Mixins List
+class Mixins_pk(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin, generics.GenericAPIView):
+    queryset = Guest.objects.all()
+    serializer_class = GuestSerializer
+
+    def get(self, request, pk):
+        return self.retrieve(request)
+    def put(self, request, pk):
+        return self.update(request)
+    def delete(self, request, pk):
+        return self.destroy(request)
