@@ -160,3 +160,13 @@ class Generics_pk(generics.RetrieveUpdateDestroyAPIView):
 class Viewset_guest(viewsets.ModelViewSet):
     queryset = Guest.objects.all()
     serializer_class = GuestSerializer
+
+class Viewset_movie(viewsets.ModelViewSet):
+    queryset = Movie.objects.all()
+    serializer_class = MovieSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['movie']
+
+class Viewset_reservation(viewsets.ModelViewSet):
+    queryset = Reservation.objects.all()
+    serializer_class = ReservationSerializer

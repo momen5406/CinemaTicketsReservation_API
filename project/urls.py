@@ -6,6 +6,8 @@ from tickets import views
 
 router = DefaultRouter()
 router.register('guests', views.Viewset_guest)
+router.register('movies', views.Viewset_movie)
+router.register('reservations', views.Viewset_reservation)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
