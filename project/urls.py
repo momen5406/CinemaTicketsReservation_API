@@ -16,8 +16,12 @@ urlpatterns = [
     path("rest/cbv/", views.CBV_List.as_view()),
     #4.2 GET PUT DELETE (CBV)
     path("rest/cbv/<int:pk>", views.CBV_pk.as_view()),
-    #5.1 GET POST (CBV)
+    #5.1 GET POST (MIXINS)
     path("rest/mixins/", views.Mixins_list.as_view()),
-    #5.2 GET PUT DELETE (CBV)
-    path("rest/mixins/<int:pk>", views.Mixins_pk.as_view())
+    #5.2 GET PUT DELETE (MIXINS)
+    path("rest/mixins/<int:pk>", views.Mixins_pk.as_view()),
+    #6.1 GET POST (GENERICS)
+    path("rest/generics/", views.Generics_list.as_view()),
+    #5.2 GET PUT DELETE (GENERICS)
+    path("rest/generics/<int:pk>", views.Generics_pk.as_view())
 ]
