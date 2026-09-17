@@ -1,13 +1,16 @@
+from django.db.models import Model
 from django.http import Http404
 from django.http.response import JsonResponse
-from rest_framework import status, filters
+from rest_framework import status, filters, generics, mixins, viewsets
+from rest_framework.authentication import BasicAuthentication, TokenAuthentication
 from rest_framework.decorators import api_view
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework import generics, mixins, viewsets
 
-from .models import Movie, Guest, Reservation
-from .serializers import  GuestSerializer, MovieSerializer, ReservationSerializer
+from .models import Movie, Guest, Reservation, Post
+from .serializers import  GuestSerializer, MovieSerializer, ReservationSerializer, PostSerializer
+from .permissions import IsAuthorOrReadonly
 
 
 #1 Without REST and no model query FBV
@@ -149,11 +152,15 @@ class Mixins_pk(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.Destr
 class Generics_list(generics.ListCreateAPIView):
     queryset = Guest.objects.all()
     serializer_class = GuestSerializer
+    authentication_classes = [TokenAuthentication]
+    # permission_classes = [IsAuthenticated]
 
 #6.2 GET PUT DELETE
 class Generics_pk(generics.RetrieveUpdateDestroyAPIView):
     queryset = Guest.objects.all()
     serializer_class = GuestSerializer
+    authentication_classes = [TokenAuthentication]
+    # permission_classes = [IsAuthenticated]
 
 
 #7 Viewsets
@@ -161,15 +168,18 @@ class Viewset_guest(viewsets.ModelViewSet):
     queryset = Guest.objects.all()
     serializer_class = GuestSerializer
 
+
 class Viewset_movie(viewsets.ModelViewSet):
     queryset = Movie.objects.all()
     serializer_class = MovieSerializer
     filter_backends = [filters.SearchFilter]
     search_fields = ['movie']
 
+
 class Viewset_reservation(viewsets.ModelViewSet):
     queryset = Reservation.objects.all()
     serializer_class = ReservationSerializer
+
 
 #8 Find Movie
 @api_view(['GET'])
@@ -193,3 +203,9 @@ def new_reservation(request):
     reservation.save()
 
     return Response(status=status.HTTP_201_CREATED)
+
+#10 Post Author Editor
+class Post_pk(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAuthorOrReadonly]
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
